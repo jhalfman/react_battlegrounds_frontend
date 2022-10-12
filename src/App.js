@@ -3,9 +3,9 @@ import {useEffect, useState} from 'react';
 
 function App() {
   const [homeMessage, setHomeMessage] = useState("");
-  const [cardMessage, setCardMessage] = useState("");
+  const [cardMessage, setCardMessage] = useState([]);
   const [tribeMessage, setTribeMessage] = useState([]);
-  const [tierMessage, setTierMessage] = useState("");
+  const [tierMessage, setTierMessage] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:9292")
@@ -16,20 +16,26 @@ function App() {
     .then(resp => resp.json())
     .then(data => setTribeMessage(data))
     
-    /* fetch("http://localhost:9292")
+    fetch("http://localhost:9292/tiers")
     .then(resp => resp.json())
-    .then(data => setHomeMessage(data.message)) */
+    .then(data => setTierMessage(data))
 
-    /* fetch("http://localhost:9292")
+    fetch("http://localhost:9292/cards")
     .then(resp => resp.json())
-    .then(data => setHomeMessage(data.message)) */
+    .then(data => setCardMessage(data))
   }, [])
 
   return (
     <div className="App">
       {homeMessage}
       {tribeMessage.map(tribe => {
-        return <div>{tribe.name}</div>
+        return <div key={tribe.id}>{tribe.name}</div>
+      })}
+      {tierMessage.map(tier => {
+        return <div key={tier.id}>{tier.tier}</div>
+      })}
+      {cardMessage.map(card => {
+        return <div key={card.id}>{card.name}</div>
       })}
     </div>
   );
