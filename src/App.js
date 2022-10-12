@@ -1,16 +1,18 @@
 import './App.css';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 function App() {
+  const [routeMessage, setRouteMessage] = useState("");
+
   useEffect(() => {
-    fetch("http://localhost/9292")
+    fetch("http://localhost:9292")
     .then(resp => resp.json())
-    .then(data => console.log("hello"))
+    .then(data => setRouteMessage(data.message))
   })
 
   return (
     <div className="App">
-      
+      {routeMessage}
     </div>
   );
 }
