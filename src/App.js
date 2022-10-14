@@ -1,5 +1,7 @@
 import './App.css';
 import {useEffect, useState} from 'react';
+import NavBar from './components/navigation/NavBar';
+import {Routes, Route } from 'react-router-dom';
 
 function App() {
   const [homeMessage, setHomeMessage] = useState("");
