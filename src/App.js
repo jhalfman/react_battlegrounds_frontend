@@ -1,4 +1,3 @@
-import './App.css';
 import {useEffect, useState} from 'react';
 import NavBar from './components/navigation/NavBar';
 import {Routes, Route } from 'react-router-dom';
@@ -9,40 +8,15 @@ function App() {
   const [tribeMessage, setTribeMessage] = useState([]);
   const [tierMessage, setTierMessage] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:9292")
-    .then(resp => resp.json())
-    .then(data => setHomeMessage(data.message))
-    
-    fetch("http://localhost:9292/tribes")
-    .then(resp => resp.json())
-    .then(data => setTribeMessage(data))
-    
-    fetch("http://localhost:9292/tiers")
-    .then(resp => resp.json())
-    .then(data => setTierMessage(data))
 
-    fetch("http://localhost:9292/cards")
-    .then(resp => resp.json())
-    .then(data => setCardMessage(data))
-  }, [])
 
   return (
     <div className="App">
-      {homeMessage}
-      {tribeMessage.map(tribe => {
-        return <div key={tribe.id}>{tribe.name}</div>
-      })}
-      {tierMessage.map(tier => {
-        return <div key={tier.id}>{tier.tier}</div>
-      })}
-      {cardMessage.map(card => {
-        return <div key={card.id}>
-          {card.name}
-          {card.image_url ? <img src={card.image_url} alt={card.name}/> : null}
-          </div>
-      })}
-      
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<div>HEllo</div>} />
+        <Route path="/cards" element={<div>cards</div>} />
+      </Routes>
     </div>
   );
 }
