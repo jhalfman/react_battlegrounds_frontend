@@ -35,8 +35,12 @@ function App() {
         return <div key={tier.id}>{tier.tier}</div>
       })}
       {cardMessage.map(card => {
-        return <div key={card.id}>{card.name}</div>
+        return <div key={card.id}>
+          {card.name}
+          {card.image_url ? <img src={card.image_url} alt={card.name}/> : null}
+          </div>
       })}
+      
     </div>
   );
 }
