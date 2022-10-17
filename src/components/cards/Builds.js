@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Build from './Build';
 
 const Builds = () => {
   const [buildList, setBuildList] = useState([]);
@@ -9,12 +10,15 @@ const Builds = () => {
     .then(data => setBuildList(data))
   }, [])
 
+ 
+
 
   return (
     <div>
       {buildList.map(build => {
-        return build.name
+        return <Build key={build.name} name={build.name} id={build.id}/>
       })}
+      <button id='add_build'>Add Build</button>
     </div>
   )
 }

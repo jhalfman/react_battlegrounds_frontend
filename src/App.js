@@ -4,6 +4,7 @@ import {Routes, Route } from 'react-router-dom';
 import Cards from './components/cards/Cards';
 import Home from './components/static/Home';
 import Builds from './components/cards/Builds';
+import BuildHighlight from './components/cards/BuildHighlight';
 
 function App() {
   const [homeMessage, setHomeMessage] = useState("");
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cards" element={<Cards />} />
         <Route path="/builds" element={<Builds />} />
+        <Route path="/builds/:id" element={<BuildHighlight />} />
       </Routes>
     </div>
   );
