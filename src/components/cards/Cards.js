@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Card from "./Card.js"
+import { useNavigate } from "react-router-dom";
 
 const Cards = () => {
     const [cardList, setCardList] = useState([]);
@@ -7,6 +8,7 @@ const Cards = () => {
         tier: 0,
         tribe: 0
     })
+    let navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:9292/cards")
@@ -30,6 +32,7 @@ const Cards = () => {
         fetch(`http://localhost:9292/cards?stars=${filter.stars}&tribe=${filter.tribe}`)
         .then(resp => resp.json())
         .then(data => setCardList(data))
+        navigate(`?stars=${filter.stars}&tribe=${filter.tribe}`)
     }
 
   return (
