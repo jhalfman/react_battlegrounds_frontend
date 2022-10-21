@@ -36,7 +36,7 @@ const Builds = () => {
  } */
 
  function createNewBuild() {
-  navigate('create')
+  navigate('/cards/createbuild')
  }
 
   return (

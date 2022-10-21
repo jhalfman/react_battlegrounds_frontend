@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#currentBuildDisplay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-style: solid;
+  border-color: blue;
+}

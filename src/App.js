@@ -20,10 +20,11 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cards" element={<Cards />} />
+        <Route path="/cards" element={<Cards />}>
+          <Route path="createbuild" element={<CreateBuild />} />
+        </Route>
         <Route path="/builds" element={<Builds />} />
         <Route path="/builds/:id" element={<BuildHighlight />} />
-        <Route path="/builds/create" element={<CreateBuild />} />
       </Routes>
     </div>
   );

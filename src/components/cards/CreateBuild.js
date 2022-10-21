@@ -47,7 +47,7 @@ const CreateBuild = () => {
       }
 
   return (
-    <div>
+    <div id='currentBuildDisplay'>
         <form id='newBuildForm' onSubmit={handleSubmit}>
             <input id='buildName' type="text" placeholder='Enter Build Name Here...' name='buildName' value={newBuild.name} onChange={updateNewBuild}>
             </input>

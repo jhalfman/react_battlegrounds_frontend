@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Card from "./Card.js"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 
 const Cards = () => {
     const [cardList, setCardList] = useState([]);
@@ -61,6 +61,7 @@ const Cards = () => {
         {cardList.map(card => {
             return <Card key={card.id} card={card} />
         })}
+        <Outlet />
     </div>
   )
 }
