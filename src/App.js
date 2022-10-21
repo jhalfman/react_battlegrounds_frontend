@@ -12,6 +12,7 @@ function App() {
   const [cardMessage, setCardMessage] = useState([]);
   const [tribeMessage, setTribeMessage] = useState([]);
   const [tierMessage, setTierMessage] = useState([]);
+  const [teamBuilder, setTeamBuilder] = useState(false)
 
 
 
@@ -20,10 +21,10 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cards" element={<Cards />}>
+        <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder}/>}>
           <Route path="createbuild" element={<CreateBuild />} />
         </Route>
-        <Route path="/builds" element={<Builds />} />
+        <Route path="/builds" element={<Builds setTeamBuilder={setTeamBuilder}/>} />
         <Route path="/builds/:id" element={<BuildHighlight />} />
       </Routes>
     </div>

@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react'
 import Card from "./Card.js"
 import { useNavigate, Outlet } from "react-router-dom";
 
-const Cards = () => {
+const Cards = ({teamBuilder, setTeamBuilder}) => {
     const [cardList, setCardList] = useState([]);
     const [filterList, setFilterList] = useState({
-        tier: 0,
+        stars: 0,
         tribe: 0
     })
     let navigate = useNavigate();
@@ -13,7 +13,7 @@ const Cards = () => {
     useEffect(() => {
         fetch("http://localhost:9292/cards")
         .then(resp => resp.json())
-        .then(data => setCardList(data));
+        .then(data => setCardList(data))
     }, [])
 
     function setStarsFilter(stars) {
@@ -33,6 +33,11 @@ const Cards = () => {
         .then(resp => resp.json())
         .then(data => setCardList(data))
         navigate(`?stars=${filter.stars}&tribe=${filter.tribe}`)
+    }
+
+    function exitBuilder() {
+        setTeamBuilder(false)
+        navigate('/cards')
     }
 
   return (
@@ -58,8 +63,14 @@ const Cards = () => {
             <option value="10">Neutral</option>
             <option value="11">All</option>
         </select>
+        {teamBuilder ? <button onClick={exitBuilder}>Exit Builder</button> : null}
         {cardList.map(card => {
-            return <Card key={card.id} card={card} />
+            return (
+            <div key={card.id}>
+                <Card key={card.id} card={card} />
+                {teamBuilder ? <button onClick={() => console.log(card.id)}>Add to Build</button> : null}
+            </div>
+            )
         })}
         <Outlet />
     </div>

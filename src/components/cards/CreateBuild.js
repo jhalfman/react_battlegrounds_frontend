@@ -4,37 +4,38 @@ import React, { useState } from 'react';
 const CreateBuild = () => {
     const [newBuild, setNewBuild] = useState({
         name: "",
-        card1: {
+        cards: [{
             cardName: "",
             cardId: null
         },
-        card2: {
+        {
             cardName: "",
             cardId: null
         },
-        card3: {
+        {
             cardName: "",
             cardId: null
         },
-        card4: {
+        {
             cardName: "",
             cardId: null
         },
-        card5: {
+        {
             cardName: "",
             cardId: null
         },
-        card6: {
+        {
             cardName: "",
             cardId: null
         },
-        card7: {
+        {
             cardName: "",
             cardId: null
-        }
+        }]
       })
 
-      function handleSubmit() {
+      function handleSubmit(e) {
+        e.preventDefault();
         console.log("Wow!")
       }
 
@@ -51,9 +52,10 @@ const CreateBuild = () => {
         <form id='newBuildForm' onSubmit={handleSubmit}>
             <input id='buildName' type="text" placeholder='Enter Build Name Here...' name='buildName' value={newBuild.name} onChange={updateNewBuild}>
             </input>
-            <div className='cardSlot'>
-
-            </div>
+            {newBuild.cards.map((card, index) => {
+                    return <div key={index} className='buildCardDisplay'>{card.cardName}</div>                
+            })}
+            <input id='newBuildSubmission' type="submit" value="CONFIRM NEW BUILD"></input>
         </form>
     </div>
   )

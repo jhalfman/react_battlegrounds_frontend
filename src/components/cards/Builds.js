@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Build from './Build';
 import { useNavigate } from "react-router-dom";
 
-const Builds = () => {
+const Builds = ({setTeamBuilder}) => {
   const [buildList, setBuildList] = useState([]);
   let navigate = useNavigate();
 
@@ -36,6 +36,7 @@ const Builds = () => {
  } */
 
  function createNewBuild() {
+  setTeamBuilder(true);
   navigate('/cards/createbuild')
  }
 
