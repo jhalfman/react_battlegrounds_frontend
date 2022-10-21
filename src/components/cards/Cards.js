@@ -27,7 +27,7 @@ const Cards = () => {
     }
 
     function filterCards(filter) {
-        fetch(`http://localhost:9292/cards/${filter.stars}/${filter.tribe}`)
+        fetch(`http://localhost:9292/cards?stars=${filter.stars}&tribe=${filter.tribe}`)
         .then(resp => resp.json())
         .then(data => setCardList(data))
     }
