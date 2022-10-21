@@ -12,7 +12,7 @@ const Builds = () => {
     .then(data => setBuildList(data))
   }, [])
 
- function createBuild() {
+ /*function createBuild() {
   console.log("Creating new build")
   fetch("http://localhost:9292/builds", {
     method: "POST",
@@ -31,17 +31,20 @@ const Builds = () => {
     }),
   })
   .then(resp => resp.json())
-  .then(data => navigate(`${data.id}`))
+  .then(data => navigate(`${data.id}`)) 
   
- }
+ } */
 
+ function createNewBuild() {
+  navigate('create')
+ }
 
   return (
     <div>
       {buildList.map(build => {
         return <Build key={build.name} name={build.name} id={build.id}/>
       })}
-      <button id='add_build' onClick={createBuild}>Add Build</button>
+      <button id='add_build' onClick={createNewBuild}>Craete New Build</button>
     </div>
   )
 }
