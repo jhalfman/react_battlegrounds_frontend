@@ -8,6 +8,44 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
         stars: 0,
         tribe: 0
     })
+    const [newBuild, setNewBuild] = useState({
+        name: "",
+        cards: [{
+            cardName: "",
+            cardId: null,
+            cardImage: null
+        },
+        {
+            cardName: "",
+            cardId: null,
+            cardImage: null
+        },
+        {
+            cardName: "",
+            cardId: null,
+            cardImage: null
+        },
+        {
+            cardName: "",
+            cardId: null,
+            cardImage: null
+        },
+        {
+            cardName: "",
+            cardId: null,
+            cardImage: null
+        },
+        {
+            cardName: "",
+            cardId: null,
+            cardImage: null
+        },
+        {
+            cardName: "",
+            cardId: null,
+            cardImage: null
+        }]
+      })
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -40,6 +78,37 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
         navigate('/cards')
     }
 
+    function updateNewBuild(e) {
+        const updatedBuild = {
+            ...newBuild,
+            name: e.target.value
+        }
+        setNewBuild(updatedBuild);
+      }
+
+    function addToTeam(index) {
+        let newCard = {};
+        fetch(`http://localhost:9292/cards/${index}`)
+        .then(resp => resp.json())
+        .then(data => {
+            newCard = data;
+            let nextIndex = newBuild.cards.findIndex((card) => card.cardId === null)
+            const updatedBuildList = newBuild.cards.map((card, index) => {
+                if (index === nextIndex) {
+                    return {cardName: newCard.name, cardId: newCard.id, cardImage: newCard.image_url}
+                }
+                else {
+                    return card;
+                }
+            })
+            setNewBuild({
+                ...newBuild,
+                cards: updatedBuildList
+            })
+
+        })
+    }
+
   return (
     <div>
         <div onClick={() => setStarsFilter(1)}>⭐</div>
@@ -68,11 +137,11 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
             return (
             <div key={card.id}>
                 <Card key={card.id} card={card} />
-                {teamBuilder ? <button onClick={() => console.log(card.id)}>Add to Build</button> : null}
+                {teamBuilder ? <button onClick={() => addToTeam(card.id)}>Add to Build</button> : null}
             </div>
             )
         })}
-        <Outlet />
+        <Outlet context={{ updateNewBuild: {updateNewBuild}, newBuild: {newBuild} }}/>
     </div>
   )
 }

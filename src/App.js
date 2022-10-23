@@ -15,13 +15,14 @@ function App() {
   const [teamBuilder, setTeamBuilder] = useState(false)
 
 
+  
 
   return (
     <div className="App">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder}/>}>
+        <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder} />}>
           <Route path="createbuild" element={<CreateBuild />} />
         </Route>
         <Route path="/builds" element={<Builds setTeamBuilder={setTeamBuilder}/>} />
