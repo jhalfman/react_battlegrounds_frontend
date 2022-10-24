@@ -109,6 +109,25 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
         })
     }
 
+    function removeFromTeam(index) {
+        const newCardsArray = newBuild.cards.map((card, i) => {
+            if (i === index) {
+                return {
+                    cardName: "",
+                    cardId: null,
+                    cardImage: null
+                }
+            }
+            else {
+                return card
+            }
+        })
+        setNewBuild({
+            ...newBuild,
+            cards: newCardsArray
+        })
+    }
+
   return (
     <div>
         <div onClick={() => setStarsFilter(1)}>⭐</div>
@@ -133,6 +152,7 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
             <option value="11">All</option>
         </select>
         {teamBuilder ? <button onClick={exitBuilder}>Exit Builder</button> : null}
+        <div id='cardDisplay'>
         {cardList.map(card => {
             return (
             <div key={card.id}>
@@ -141,7 +161,8 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
             </div>
             )
         })}
-        <Outlet context={{ updateNewBuild: {updateNewBuild}, newBuild: {newBuild} }}/>
+        </div>
+        <Outlet context={{ updateNewBuild: {updateNewBuild}, newBuild: {newBuild}, removeFromTeam: {removeFromTeam} }}/>
     </div>
   )
 }

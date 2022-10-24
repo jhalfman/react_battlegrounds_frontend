@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 
 
-const CreateBuild = () => {
+const CreateBuild = ({setBuildList, buildList}) => {
     const buildContext = useOutletContext();
     const {updateNewBuild} = buildContext.updateNewBuild
     const {newBuild} = buildContext.newBuild
+    const {removeFromTeam} = buildContext.removeFromTeam
     let navigate = useNavigate();
     
 
@@ -24,7 +25,13 @@ const CreateBuild = () => {
             }),
         })
         .then(resp => resp.json())
-        .then(data => navigate(`/builds`)) 
+        .then(data => {
+          setBuildList([
+            ...buildList,
+            data
+          ])
+          navigate(`/builds`)
+        }) 
   
         }
         
@@ -38,7 +45,12 @@ const CreateBuild = () => {
             <input id='buildName' type="text" placeholder='Enter Build Name Here...' name='buildName' value={newBuild.name} onChange={updateNewBuild}>
             </input>
             {newBuild.cards.map((card, index) => {
-                    return <img key={index} className='buildCardDisplay' src={card.cardImage} alt={card.cardName}></img>                
+                    return (
+                    <div className='buildCardDisplay'>
+                    <img key={index} src={card.cardImage} alt={card.cardName}></img>
+                    <button type="Button" onClick={(e) => removeFromTeam(index)}>Remove</button>
+                    </div>
+                    )
             })}
             <input id='newBuildSubmission' type="submit" value="CONFIRM NEW BUILD"></input>
         </form>

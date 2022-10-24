@@ -17,6 +17,47 @@ code {
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 38% ;
+  background-color: black;
   border-style: solid;
   border-color: blue;
+  display: flex;
+}
+
+#cardDisplay {
+  border-style: solid;
+  border-color: blue;
+  display: flex;
+  flex-wrap: wrap;
+  height:60%
+}
+
+.buildCardDisplay {
+  display: flex;
+  flex-direction: column;
+}
+
+.buildCardDisplay img {
+  width: 75%;
+  
+  
+}
+
+.buildCardDisplay button {
+  width: 40%;
+  justify-content: center;
+}
+
+
+#newBuildForm {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#buildName {
+  width: 100%
+}
+
+#newBuildSubmission {
+  width: 100%;
 }

@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Build from './Build';
 import { useNavigate } from "react-router-dom";
 
-const Builds = ({setTeamBuilder}) => {
-  const [buildList, setBuildList] = useState([]);
+const Builds = ({setTeamBuilder, buildList}) => {
+  
   let navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("http://localhost:9292/builds")
-    .then(resp => resp.json())
-    .then(data => setBuildList(data))
-  }, [])
+  
 
 
  function createNewBuild() {
