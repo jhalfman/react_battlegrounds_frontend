@@ -41,6 +41,8 @@ const BuildHighlight = ({setBuildList, buildList}) => {
         .then(data => {
             const newBuildList = buildList.filter(build => build.id !== data.id)
             setBuildList(newBuildList)
+
+            //receive list of builds from back end
             navigate("/builds")
         })
     }

@@ -4,6 +4,7 @@ import { useNavigate, Outlet } from "react-router-dom";
 
 const Cards = ({teamBuilder, setTeamBuilder}) => {
     const [cardList, setCardList] = useState([]);
+    const [filteredCardList, setFilteredCardList] = useState([])
     const [filterList, setFilterList] = useState({
         stars: 0,
         tribe: 0
@@ -51,7 +52,10 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
     useEffect(() => {
         fetch("http://localhost:9292/cards")
         .then(resp => resp.json())
-        .then(data => setCardList(data))
+        .then(data => {
+            setCardList(data);
+            setFilteredCardList(data)
+        })
     }, [])
 
     function setStarsFilter(stars) {
@@ -67,9 +71,11 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
     }
 
     function filterCards(filter) {
-        fetch(`http://localhost:9292/cards?stars=${filter.stars}&tribe=${filter.tribe}`)
-        .then(resp => resp.json())
-        .then(data => setCardList(data))
+        const filteredCards = cardList.filter(card => {
+            return (card.tier_id === filter.stars || filter.stars === 0) && (card.tribe_id === filter.tribe || filter.tribe === "0")
+        })
+        setFilteredCardList(filteredCards)
+        
         navigate(`?stars=${filter.stars}&tribe=${filter.tribe}`)
     }
 
@@ -153,7 +159,7 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
         </select>
         {teamBuilder ? <button onClick={exitBuilder}>Exit Builder</button> : null}
         <div id='cardDisplay'>
-        {cardList.map(card => {
+        {filteredCardList.map(card => {
             return (
             <div key={card.id}>
                 <Card key={card.id} card={card} />
