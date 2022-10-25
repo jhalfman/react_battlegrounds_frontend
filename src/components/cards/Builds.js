@@ -3,15 +3,11 @@ import Build from './Build';
 import { useNavigate } from "react-router-dom";
 
 const Builds = ({setTeamBuilder, buildList}) => {
-  
   let navigate = useNavigate();
 
-  
-
-
- function createNewBuild() {
+  function createNewBuild() {
   setTeamBuilder(true);
-  navigate('/cards/createbuild')
+  navigate('/cards/cardselection')
  }
 
   return (

@@ -3,46 +3,31 @@ import { useParams } from 'react-router-dom';
 import Card from './Card';
 import { useNavigate } from "react-router-dom";
 
-const BuildHighlight = ({setBuildList, buildList}) => {
+const BuildHighlight = ({setBuildList, buildList, cardList}) => {
     const [currentBuild, setCurrentBuild] = useState([])
-    const [editorOn, setEditorOn] = useState(false)
-    const [cardList, setCardList] = useState([]);
-    const [replacementOn, setReplacementOn] = useState(false)
-    const [confirmSelectionOn, setConfirmSelectionOn] = useState(false)
     const [replacementForm, setReplacementForm] = useState({
         cardId: null,
         buildIndex: null,
         replacementId: ""
     })
+    const [editorOn, setEditorOn] = useState(false)
+    const [replacementOn, setReplacementOn] = useState(false)
+    const [confirmSelectionOn, setConfirmSelectionOn] = useState(false)
     let {id} = useParams();
     let navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:9292/builds/${id}`)
-        .then(resp => resp.json())
-        .then(data => setCurrentBuild(data))
+        const highlight = buildList.find(build => build.id === parseInt(id))
+        setCurrentBuild(highlight.cards)
     }, [])
-
-    useEffect(() => {
-        fetch("http://localhost:9292/cards")
-        .then(resp => resp.json())
-        .then(data => setCardList(data))
-    }, [])
-
-    function backToBuilds() {
-        navigate("/builds")
-    }
 
     function deleteBuild() {
         fetch(`http://localhost:9292/builds/${id}`, {
             method: "DELETE"
         })
         .then(resp => resp.json())
-        .then(data => {
-            const newBuildList = buildList.filter(build => build.id !== data.id)
-            setBuildList(newBuildList)
-
-            //receive list of builds from back end
+        .then(builds => {
+            setBuildList(builds)
             navigate("/builds")
         })
     }
@@ -126,7 +111,7 @@ const BuildHighlight = ({setBuildList, buildList}) => {
         {replacementOn ? replacementSelectForm : null}
         <button onClick={() => setEditorOn(!editorOn)}>Edit Build</button>
         <button onClick={deleteBuild}>Delete Build</button>
-        <button onClick={backToBuilds}>Back</button>
+        <button onClick={() => navigate("/builds")}>Back</button>
     </div>
   )
 }

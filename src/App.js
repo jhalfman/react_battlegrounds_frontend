@@ -9,13 +9,22 @@ import CreateBuild from './components/cards/CreateBuild';
 
 function App() {
   const [teamBuilder, setTeamBuilder] = useState(false);
+  const [cardList, setCardList] = useState([]);
   const [buildList, setBuildList] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:9292/builds")
     .then(resp => resp.json())
     .then(data => setBuildList(data))
+
+    fetch("http://localhost:9292/cards")
+    .then(resp => resp.json())
+    .then(data => {
+        setCardList(data);
+    })
   }, [])
+
+  
   
 
   return (
@@ -23,11 +32,11 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder} />}>
-          <Route path="createbuild" element={<CreateBuild setBuildList={setBuildList} buildList={buildList}/>} />
+        <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder} cardList={cardList}/>}>
+          <Route path="cardselection" element={<CreateBuild setBuildList={setBuildList} buildList={buildList}/>} />
         </Route>
         <Route path="/builds" element={<Builds setTeamBuilder={setTeamBuilder} buildList={buildList}/>} />
-        <Route path="/builds/:id" element={<BuildHighlight setBuildList={setBuildList} buildList={buildList}/>} />
+        <Route path="/builds/:id" element={<BuildHighlight setBuildList={setBuildList} buildList={buildList} cardList={cardList}/>} />
       </Routes>
     </div>
   );

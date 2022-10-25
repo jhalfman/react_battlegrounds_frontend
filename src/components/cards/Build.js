@@ -1,19 +1,18 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
-const Build = ({name, id, buildViewer}) => {
+const Build = ({name, id}) => {
 
     let navigate = useNavigate();
 
-    function buildViewer(id) {
-        console.log(id);
+    function viewBuild(id) {
         navigate(`/builds/${id}`)
       }
 
   return (
     <div>
         {name}
-        <button id="view" onClick={() => buildViewer(id)}>View Build</button>
+        <button id="view" onClick={() => viewBuild(id)}>View Build</button>
     </div>
   )
 }

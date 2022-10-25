@@ -2,7 +2,7 @@ import React from 'react'
 
 const Card = ({card}) => {
   return (
-    <img className="card" src={card.image_url} alt={card.name} onClick={() => console.log(card.name)}/>
+    <img className="card" src={card.image_url} alt={card.name} />
   )
 }
 
