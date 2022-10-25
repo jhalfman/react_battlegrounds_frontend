@@ -58,24 +58,17 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
         })
     }, [])
 
-    function setStarsFilter(stars) {
-        const newFilterList = {...filterList, stars: stars};
-        setFilterList(newFilterList);
-        filterCards(newFilterList);
-    }
-    
-    function setTribeFilter(e) {
-        const newFilterList = {...filterList, tribe: e.target.value}
+    function setFilter(e) {
+        const newFilterList = {...filterList, [e.target.className]: parseInt(e.target.value)};
         setFilterList(newFilterList);
         filterCards(newFilterList);
     }
 
     function filterCards(filter) {
         const filteredCards = cardList.filter(card => {
-            return (card.tier_id === filter.stars || filter.stars === 0) && (card.tribe_id === filter.tribe || filter.tribe === "0")
+            return (card.tier_id === filter.stars || filter.stars === 0) && (parseInt(card.tribe_id) === filter.tribe || filter.tribe === 0)
         })
         setFilteredCardList(filteredCards)
-        
         navigate(`?stars=${filter.stars}&tribe=${filter.tribe}`)
     }
 
@@ -93,27 +86,21 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
       }
 
     function addToTeam(index) {
-        let newCard = {};
-        fetch(`http://localhost:9292/cards/${index}`)
-        .then(resp => resp.json())
-        .then(data => {
-            newCard = data;
-            let nextIndex = newBuild.cards.findIndex((card) => card.cardId === null)
-            const updatedBuildList = newBuild.cards.map((card, index) => {
-                if (index === nextIndex) {
-                    return {cardName: newCard.name, cardId: newCard.id, cardImage: newCard.image_url}
-                }
-                else {
-                    return card;
-                }
-            })
-            setNewBuild({
-                ...newBuild,
-                cards: updatedBuildList
-            })
-
+        const newCard = cardList.find(card => card.id === index)
+        let nextIndex = newBuild.cards.findIndex((card) => card.cardId === null)
+        const updatedBuildList = newBuild.cards.map((card, index) => {
+            if (index === nextIndex) {
+                return {cardName: newCard.name, cardId: newCard.id, cardImage: newCard.image_url}
+            }
+            else {
+                return card;
+            }
         })
-    }
+        setNewBuild({
+            ...newBuild,
+            cards: updatedBuildList
+        })
+}
 
     function removeFromTeam(index) {
         const newCardsArray = newBuild.cards.map((card, i) => {
@@ -136,14 +123,14 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
 
   return (
     <div>
-        <div onClick={() => setStarsFilter(1)}>⭐</div>
-        <div onClick={() => setStarsFilter(2)}>⭐⭐</div>
-        <div onClick={() => setStarsFilter(3)}>⭐⭐⭐</div>
-        <div onClick={() => setStarsFilter(4)}>⭐⭐⭐⭐</div>
-        <div onClick={() => setStarsFilter(5)}>⭐⭐⭐⭐⭐</div>
-        <div onClick={() => setStarsFilter(6)}>⭐⭐⭐⭐⭐⭐</div>
-        <button onClick={() => setStarsFilter(0)}>Reset stars</button>
-        <select name="tribe" id="tribe" onChange={setTribeFilter}>
+        <button className='stars' value={1} onClick={setFilter}>⭐</button>
+        <button className='stars' value={2} onClick={setFilter}>⭐⭐</button>
+        <button className='stars' value={3} onClick={setFilter}>⭐⭐⭐</button>
+        <button className='stars' value={4} onClick={setFilter}>⭐⭐⭐⭐</button>
+        <button className='stars' value={5} onClick={setFilter}>⭐⭐⭐⭐⭐</button>
+        <button className='stars' value={6} onClick={setFilter}>⭐⭐⭐⭐⭐⭐</button>
+        <button className='stars' value={0} onClick={setFilter}>Reset stars</button>
+        <select className="tribe" id="tribe" onChange={setFilter}>
             <option value="0">--Select a Tribe--</option>
             <option value="1">Beast</option>
             <option value="2">Murloc</option>

@@ -8,10 +8,6 @@ import BuildHighlight from './components/cards/BuildHighlight';
 import CreateBuild from './components/cards/CreateBuild';
 
 function App() {
-  const [homeMessage, setHomeMessage] = useState("");
-  const [cardMessage, setCardMessage] = useState([]);
-  const [tribeMessage, setTribeMessage] = useState([]);
-  const [tierMessage, setTierMessage] = useState([]);
   const [teamBuilder, setTeamBuilder] = useState(false);
   const [buildList, setBuildList] = useState([]);
 

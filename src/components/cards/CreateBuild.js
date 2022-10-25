@@ -46,9 +46,9 @@ const CreateBuild = ({setBuildList, buildList}) => {
             </input>
             {newBuild.cards.map((card, index) => {
                     return (
-                    <div className='buildCardDisplay'>
-                    <img key={index} src={card.cardImage} alt={card.cardName}></img>
-                    <button type="Button" onClick={(e) => removeFromTeam(index)}>Remove</button>
+                    <div key={index} className='buildCardDisplay'>
+                      <img key={index} src={card.cardImage} alt={card.cardName}></img>
+                      <button type="Button" onClick={(e) => removeFromTeam(index)}>Remove</button>
                     </div>
                     )
             })}
