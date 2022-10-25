@@ -111,6 +111,14 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
             return (
                 <div key={card.id}>
                     <Card key={card.id} card={card} />
+                    <h6>Builds: {card.builds ? card.builds.map((card, index) => {
+                        if (index === 0) {
+                            return card.name
+                        }
+                        else {
+                            return ", " + card.name
+                        }
+                    }) : "none"}</h6>
                     {editorOn ? <button onClick={(e) => editBuild(card.id, index)}>Replace</button> : null}
                 </div>
             )
