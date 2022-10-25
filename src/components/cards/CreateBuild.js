@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 
 
-const CreateBuild = ({setBuildList, buildList}) => {
+const CreateBuild = ({setBuildList, buildList, setTeamBuilder}) => {
     const buildContext = useOutletContext();
     const {updateNewBuild} = buildContext.updateNewBuild
     const {newBuild} = buildContext.newBuild
@@ -12,8 +12,6 @@ const CreateBuild = ({setBuildList, buildList}) => {
 
       function handleSubmit(e) {
         e.preventDefault();
-        
-        console.log("Creating new build")
         fetch("http://localhost:9292/builds", {
             method: "POST",
             headers: {
@@ -25,11 +23,12 @@ const CreateBuild = ({setBuildList, buildList}) => {
             }),
         })
         .then(resp => resp.json())
-        .then(data => {
+        .then(build => {
           setBuildList([
             ...buildList,
-            data
+            build
           ])
+          setTeamBuilder(false)
           navigate(`/builds`)
         }) 
   
@@ -48,7 +47,7 @@ const CreateBuild = ({setBuildList, buildList}) => {
                     return (
                     <div key={index} className='buildCardDisplay'>
                       <img key={index} src={card.cardImage} alt={card.cardName}></img>
-                      <button type="Button" onClick={(e) => removeFromTeam(index)}>Remove</button>
+                      {card.cardImage ? <button type="Button" onClick={() => removeFromTeam(index)}>Remove</button> : null}
                     </div>
                     )
             })}

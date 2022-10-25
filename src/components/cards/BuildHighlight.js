@@ -18,7 +18,10 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
 
     useEffect(() => {
         const highlight = buildList.find(build => build.id === parseInt(id))
-        setCurrentBuild(highlight.cards)
+        console.log(highlight)
+        if (highlight) {
+            setCurrentBuild(highlight.cards)
+        }
     }, [])
 
     function deleteBuild() {
@@ -62,16 +65,20 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
             })
         })
         .then(resp => resp.json())
-        .then((data) => {
-            const patchedBuild = currentBuild.map((card, index) => {
-                if (index === replacementForm.buildIndex) {
-                    return data
-                }
-                else {
-                    return card
-                }
-            })
-            setCurrentBuild(patchedBuild)
+        .then(builds => {
+            // const patchedBuild = currentBuild.map((card, index) => {
+            //     if (index === replacementForm.buildIndex) {
+            //         return data
+            //     }
+            //     else {
+            //         return card
+            //     }
+            // })
+            // setCurrentBuild(patchedBuild)
+            // console.log(buildList, currentBuild, patchedBuild)
+            setBuildList(builds)
+            const highlight = builds.find(build => build.id === parseInt(id))
+            setCurrentBuild(highlight.cards)
             setReplacementForm({
                 cardId: null,
                 buildIndex: null,
@@ -88,7 +95,7 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
         <div>
             <select onChange={setReplacement} value={replacementForm.replacementId}>
                 {cardList.map(card => {
-                    return <option key={card.id} value={card.id}>{card.name}</option>
+                    return <option key={card.id} value={card.id}>{card.name}  |  Tribe: {card.tribe.name}  |     Tier: {card.tier.tier}</option>
                 })}
             </select>
             {confirmSelectionOn ? <button>Confirm Selection</button> : null}
@@ -102,10 +109,10 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
         {editorOn ? <h3>Select a card to replace</h3> : null}
         {currentBuild.map((card, index) => {
             return (
-            <div key={card.id}>
-            <Card key={card.id} card={card} />
-            {editorOn ? <button onClick={(e) => editBuild(card.id, index)}>Replace</button> : null}
-            </div>
+                <div key={card.id}>
+                    <Card key={card.id} card={card} />
+                    {editorOn ? <button onClick={(e) => editBuild(card.id, index)}>Replace</button> : null}
+                </div>
             )
         })}
         {replacementOn ? replacementSelectForm : null}

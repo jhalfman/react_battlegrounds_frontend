@@ -33,7 +33,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder} cardList={cardList}/>}>
-          <Route path="cardselection" element={<CreateBuild setBuildList={setBuildList} buildList={buildList}/>} />
+          <Route path="cardselection" element={<CreateBuild setBuildList={setBuildList} buildList={buildList} setTeamBuilder={setTeamBuilder}/>} />
         </Route>
         <Route path="/builds" element={<Builds setTeamBuilder={setTeamBuilder} buildList={buildList}/>} />
         <Route path="/builds/:id" element={<BuildHighlight setBuildList={setBuildList} buildList={buildList} cardList={cardList}/>} />
