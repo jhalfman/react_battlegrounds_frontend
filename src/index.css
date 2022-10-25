@@ -12,16 +12,8 @@ code {
     monospace;
 }
 
-#currentBuildDisplay {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 38% ;
-  background-color: black;
-  border-style: solid;
-  border-color: blue;
-  display: flex;
+a {
+  margin-right: 25px;
 }
 
 #cardDisplay {
@@ -29,35 +21,75 @@ code {
   border-color: blue;
   display: flex;
   flex-wrap: wrap;
-  height:60%
 }
 
-.buildCardDisplay {
+#cardDisplay2 {
+  border-style: solid;
+  border-color: blue;
+  display: flex;
+  flex-wrap: wrap;
+  height:400px;
+  overflow: auto;
+}
+
+#displayCards {
   display: flex;
   flex-direction: column;
-}
-
-.buildCardDisplay img {
-  width: 75%;
-  
-  
-}
-
-.buildCardDisplay button {
-  width: 40%;
+  flex-shrink: 1;
   justify-content: center;
+  align-items: center;
 }
 
+#currentBuildDisplay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 37% ;
+  border-style: solid;
+  border-color: blue;
+  display: flex;
+}
 
 #newBuildForm {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 #buildName {
-  width: 100%
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#buildCardDisplay {
+  display: flex;
+  align-content: space-around;
+}
+
+.buildCards {
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buildCards img {
+  width: 75%;
+}
+
+.buildCards button {
+  width: 40%;
+  justify-content: center;
+  align-items: center;
 }
 
 #newBuildSubmission {
   width: 100%;
+}
+
+#spaceFill {
+  height: 30%;
 }

@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react'
 import Card from "./Card.js"
 import { useNavigate, Outlet } from "react-router-dom";
 
-const Cards = ({teamBuilder, setTeamBuilder}) => {
-    const [cardList, setCardList] = useState([]);
-    const [filteredCardList, setFilteredCardList] = useState([])
+const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
+    
+    const [filteredCardList, setFilteredCardList] = useState(cardList)
     const [filterList, setFilterList] = useState({
         stars: 0,
         tribe: 0
@@ -48,15 +48,6 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
         }]
       })
     let navigate = useNavigate();
-
-    useEffect(() => {
-        fetch("http://localhost:9292/cards")
-        .then(resp => resp.json())
-        .then(data => {
-            setCardList(data);
-            setFilteredCardList(data)
-        })
-    }, [])
 
     function setFilter(e) {
         const newFilterList = {...filterList, [e.target.className]: parseInt(e.target.value)};
@@ -145,10 +136,10 @@ const Cards = ({teamBuilder, setTeamBuilder}) => {
             <option value="11">All</option>
         </select>
         {teamBuilder ? <button onClick={exitBuilder}>Exit Builder</button> : null}
-        <div id='cardDisplay'>
+        <div id={teamBuilder ? 'cardDisplay2' : 'cardDisplay'}>
         {filteredCardList.map(card => {
             return (
-            <div key={card.id}>
+            <div key={card.id} id='displayCards'>
                 <Card key={card.id} card={card} />
                 {teamBuilder ? <button onClick={() => addToTeam(card.id)}>Add to Build</button> : null}
             </div>
