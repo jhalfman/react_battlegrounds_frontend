@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
-const CardHighlight = ({cardList}) => {
+const CardHighlight = ({cardList, setCardList}) => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [editCardOn, setEditCardOn] = useState(false)
@@ -29,7 +29,6 @@ const CardHighlight = ({cardList}) => {
 
     function updateCard(e) {
         e.preventDefault();
-        console.log(editForm)
         fetch(`http://localhost:9292/cards/${id}`, {
             method: "PATCH",
             headers: {
@@ -43,8 +42,18 @@ const CardHighlight = ({cardList}) => {
             })
         })
         .then(resp => resp.json())
-        .then(build => {
-          console.log(build)
+        .then(newCard => {
+            setEditCardOn(false)
+            const newCardList = cardList.map(card => {
+                if (newCard.id === card.id) {
+                    return newCard;
+                }
+                else {
+                    return card
+                }
+            })
+            setHighlightCard(newCard)
+            setCardList(newCardList);
         })
     }
 

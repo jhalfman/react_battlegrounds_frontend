@@ -7,7 +7,8 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
     const [filteredCardList, setFilteredCardList] = useState(cardList)
     const [filterList, setFilterList] = useState({
         stars: 0,
-        tribe: 0
+        tribe: 0,
+        search: ""
     })
     const [newBuild, setNewBuild] = useState({
         name: "",
@@ -50,17 +51,30 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
     let navigate = useNavigate();
 
     function setFilter(e) {
-        const newFilterList = {...filterList, [e.target.className]: parseInt(e.target.value)};
-        setFilterList(newFilterList);
-        filterCards(newFilterList);
+        if (e.target.name === "search") {
+            const newFilterList = {
+                ...filterList,
+                search: e.target.value
+            }
+            setFilterList(newFilterList);
+            filterCards(newFilterList)
+        }
+        else {
+            const newFilterList = {
+                ...filterList, 
+                [e.target.className]: parseInt(e.target.value)
+            };
+            setFilterList(newFilterList);
+            filterCards(newFilterList);
+        }
     }
 
     function filterCards(filter) {
         const filteredCards = cardList.filter(card => {
-            return (card.tier_id === filter.stars || filter.stars === 0) && (parseInt(card.tribe_id) === filter.tribe || filter.tribe === 0)
+            return (card.tier_id === filter.stars || filter.stars === 0) && (parseInt(card.tribe_id) === filter.tribe || filter.tribe === 0 && card.name.toLowerCase().includes(filter.search) || filter.search === "")
         })
         setFilteredCardList(filteredCards)
-        navigate(`?stars=${filter.stars}&tribe=${filter.tribe}`)
+        navigate(`?stars=${filter.stars}&tribe=${filter.tribe}&search=${filter.search}`)
     }
 
     function exitBuilder() {
@@ -135,6 +149,7 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
             <option value="10">Neutral</option>
             <option value="11">All</option>
         </select>
+        <input type="text" name="search" id='search' placeholder='Filter by Name' value={filterList.search} onChange={setFilter}></input>
         {teamBuilder ? <button onClick={exitBuilder}>Exit Builder</button> : null}
         <div id={teamBuilder ? 'cardDisplay2' : 'cardDisplay'}>
         {filteredCardList.map(card => {
