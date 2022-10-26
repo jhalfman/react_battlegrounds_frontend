@@ -151,6 +151,7 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
         </select>
         <input type="text" name="search" id='search' placeholder='Filter by Name' value={filterList.search} onChange={setFilter}></input>
         {teamBuilder ? <button onClick={exitBuilder}>Exit Builder</button> : null}
+        <button onClick={() => navigate(`createcard`)}>Add a Card</button>
         <div id={teamBuilder ? 'cardDisplay2' : 'cardDisplay'}>
         {filteredCardList.map(card => {
             return (
