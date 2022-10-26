@@ -5,8 +5,8 @@ const NavBar = ({setTeamBuilder}) => {
   return (
     <div className='navBar'>
         <Link to="/" >Home</Link>
-        <Link onClick={setTeamBuilder(false)} to="/cards">Cards</Link>
-        <Link onClick={setTeamBuilder(false)} to="/builds">Builds</Link>
+        <Link onClick={() => setTeamBuilder(false)} to="/cards">Cards</Link>
+        <Link onClick={() => setTeamBuilder(false)} to="/builds">Builds</Link>
     </div>
   )
 }

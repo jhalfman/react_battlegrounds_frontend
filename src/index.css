@@ -150,3 +150,7 @@ h6 {
 #highlight {
   background-color: rgb(161, 224, 237);
 }
+
+#highlightImage {
+  width: 30%;
+}

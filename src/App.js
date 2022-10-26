@@ -6,6 +6,7 @@ import Home from './components/static/Home';
 import Builds from './components/cards/Builds';
 import BuildHighlight from './components/cards/BuildHighlight';
 import CreateBuild from './components/cards/CreateBuild';
+import CardHighlight from './components/cards/CardHighlight';
 
 function App() {
   const [teamBuilder, setTeamBuilder] = useState(false);
@@ -35,6 +36,7 @@ function App() {
         <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder} cardList={cardList}/>}>
           <Route path="cardselection" element={<CreateBuild setBuildList={setBuildList} buildList={buildList} setTeamBuilder={setTeamBuilder}/>} />
         </Route>
+        <Route path="/cards/:id" element={<CardHighlight cardList={cardList}/>} />
         <Route path="/builds" element={<Builds setTeamBuilder={setTeamBuilder} buildList={buildList}/>} />
         <Route path="/builds/:id" element={<BuildHighlight setBuildList={setBuildList} buildList={buildList} cardList={cardList}/>} />
       </Routes>
