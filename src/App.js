@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      <NavBar setTeamBuilder={setTeamBuilder}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder} cardList={cardList}/>}>

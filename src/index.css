@@ -32,6 +32,14 @@ a {
   overflow: auto;
 }
 
+h6 {
+  margin: 0px 0px 0px 0px;
+}
+
+#cardDisplay2 button {
+  margin-top: 0px;
+}
+
 #displayCards {
   display: flex;
   flex-direction: column;
@@ -90,6 +98,55 @@ a {
   width: 100%;
 }
 
-#spaceFill {
-  height: 30%;
+#highlightPanel {
+  display: flex;
+  align-content: space-around;
+}
+
+.highlightCards {
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.highlightCards img {
+  width: 100%;
+}
+
+#replacementForm {
+  display: flex;
+  margin-top: 10px;
+  width: 100%;
+}
+#replacementFormDiv {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#replacementFormDiv select {
+  margin-right: 20px;
+}
+
+#replaceButton {
+  margin-top: -10px;
+}
+
+#buttons {
+  margin-top: 10px;
+}
+#buttons button{
+  margin-right: 20px;
+}
+
+#selectHeader {
+  text-align: center;
+  margin-bottom: -3px;
+}
+
+#highlight {
+  background-color: rgb(161, 224, 237);
 }

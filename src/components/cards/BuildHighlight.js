@@ -4,7 +4,8 @@ import Card from './Card';
 import { useNavigate } from "react-router-dom";
 
 const BuildHighlight = ({setBuildList, buildList, cardList}) => {
-    const [currentBuild, setCurrentBuild] = useState([])
+    const [currentBuild, setCurrentBuild] = useState({cards: []})
+    const [highlight, setHighlight] = useState({});
     const [replacementForm, setReplacementForm] = useState({
         cardId: null,
         buildIndex: null,
@@ -20,7 +21,7 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
         const highlight = buildList.find(build => build.id === parseInt(id))
         console.log(highlight)
         if (highlight) {
-            setCurrentBuild(highlight.cards)
+            setCurrentBuild(highlight)
         }
     }, [])
 
@@ -35,13 +36,18 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
         })
     }
 
-    function editBuild(id, index) {
+    function editBuild(id, index, e) {
         setReplacementOn(true);
         setReplacementForm({
             ...replacementForm,
             cardId: id,
             buildIndex: index
         })
+        if (e.target.parentNode.id !== "highlight") {
+            highlight.id = ""
+            e.target.parentNode.id = "highlight"
+            setHighlight(e.target.parentNode);
+        }
     }
 
     function setReplacement(e) {
@@ -78,7 +84,7 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
             // console.log(buildList, currentBuild, patchedBuild)
             setBuildList(builds)
             const highlight = builds.find(build => build.id === parseInt(id))
-            setCurrentBuild(highlight.cards)
+            setCurrentBuild(highlight)
             setReplacementForm({
                 cardId: null,
                 buildIndex: null,
@@ -91,9 +97,9 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
     }
 
     const replacementSelectForm = (
-    <form onSubmit={updateBuild}>
-        <div>
-            <select onChange={setReplacement} value={replacementForm.replacementId}>
+    <form onSubmit={updateBuild} id='replacementForm'>
+        <div id='replacementFormDiv'>
+            <select onChange={setReplacement} value={replacementForm.replacementId} id='optionList'>
                 {cardList.map(card => {
                     return <option key={card.id} value={card.id}>{card.name}  |  Tribe: {card.tribe.name}  |     Tier: {card.tier.tier}</option>
                 })}
@@ -105,28 +111,25 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
 
     
   return (
-    <div>
-        {editorOn ? <h3>Select a card to replace</h3> : null}
-        {currentBuild.map((card, index) => {
-            return (
-                <div key={card.id}>
-                    <Card key={card.id} card={card} />
-                    <h6>Builds: {card.builds ? card.builds.map((card, index) => {
-                        if (index === 0) {
-                            return card.name
-                        }
-                        else {
-                            return ", " + card.name
-                        }
-                    }) : "none"}</h6>
-                    {editorOn ? <button onClick={(e) => editBuild(card.id, index)}>Replace</button> : null}
-                </div>
-            )
-        })}
+    <div id='buildHighlight'>
+        <h1>{currentBuild.name}</h1>
+        {editorOn ? <h2 id="selectHeader">Select a card to replace</h2> : null}
+        <div id='highlightPanel'>
+            {currentBuild.cards.map((card, index) => {
+                return (
+                    <div key={card.id} className="highlightCards">
+                        <Card key={card.id} card={card} />
+                        {editorOn ? <button id='replaceButton' onClick={(e) => editBuild(card.id, index, e)}>Replace</button> : null}
+                    </div>
+                )
+            })}
+        </div>
         {replacementOn ? replacementSelectForm : null}
-        <button onClick={() => setEditorOn(!editorOn)}>Edit Build</button>
-        <button onClick={deleteBuild}>Delete Build</button>
-        <button onClick={() => navigate("/builds")}>Back</button>
+        <div id='buttons'>
+            <button onClick={() => {setEditorOn(!editorOn); setReplacementOn(!replacementOn); highlight.id = ""}}>Edit Build</button>
+            <button onClick={deleteBuild}>Delete Build</button>
+            <button onClick={() => navigate("/builds")}>Back</button>
+        </div>
     </div>
   )
 }

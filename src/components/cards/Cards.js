@@ -140,7 +140,17 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
         {filteredCardList.map(card => {
             return (
             <div key={card.id} id='displayCards'>
-                <Card key={card.id} card={card} />
+                <Card key={card.id} card={card} className='cards'/>
+                <h6>Tier: {card.tier.tier}</h6>
+                <h6>Tribe: {card.tribe.name}</h6>
+                <h6>Current builds: {card.builds ? card.builds.map((card, index) => {
+                        if (index === 0) {
+                            return card.name
+                        }
+                        else {
+                            return ", " + card.name
+                        }
+                    }) : "none"}</h6>
                 {teamBuilder ? <button onClick={() => addToTeam(card.id)}>Add to Build</button> : null}
             </div>
             )
