@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 
 
-const CreateBuild = ({setBuildList, buildList, setTeamBuilder}) => {
+const CreateBuild = ({setBuildList, buildList, setTeamBuilder, cardList, setCardList}) => {
     const buildContext = useOutletContext();
     const {updateNewBuild} = buildContext.updateNewBuild
     const {newBuild} = buildContext.newBuild
@@ -28,6 +28,22 @@ const CreateBuild = ({setBuildList, buildList, setTeamBuilder}) => {
             ...buildList,
             build
           ])
+          const newCardBuildList = build.cards.map(card => card.id);
+          const updatedCardList = cardList.map(card => {
+            if (newCardBuildList.includes(card.id)) {
+              return {
+                ...card,
+                builds: [
+                  ...card.builds,
+                  {id: build.id, name: build.name}
+                ]
+              }
+            }
+            else {
+              return card
+            }
+          })
+          setCardList(updatedCardList)
           setTeamBuilder(false)
           navigate(`/builds`)
         }) 

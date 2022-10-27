@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
-const CardHighlight = ({cardList, setCardList}) => {
+const CardHighlight = ({cardList, setCardList, buildList, setBuildList}) => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [editCardOn, setEditCardOn] = useState(false)
@@ -57,6 +57,35 @@ const CardHighlight = ({cardList, setCardList}) => {
         })
     }
 
+    function deleteCard() {
+        fetch(`http://localhost:9292/cards/${id}`, {
+            method: "DELETE"
+        })
+        .then(resp => resp.json())
+        .then(deletedCard => {
+            const newCardList = cardList.filter(card => card.id !== deletedCard.id)
+            setCardList(newCardList)
+            const correctedBuildList = buildList.map(build => {
+                const cardRemovedArray = build.cards.map(card => {
+                    if (card.id !== deletedCard.id) {
+                        return card
+                    }
+                    else {
+                        return {
+                            name: "",
+                            cardId: null,
+                            cardImage: null
+                        }
+                    }
+                })
+                return {...build, cards: cardRemovedArray}
+            })
+            setBuildList(correctedBuildList)
+            
+            navigate(`/cards`)
+        })
+    }
+
     
     if (highlightCard === undefined) {
         return <div>Loading Card...</div>
@@ -67,13 +96,13 @@ const CardHighlight = ({cardList, setCardList}) => {
                             <li>Tier: {highlightCard.tier.tier} Stars</li>
                             <li>Tribe: {highlightCard.tribe.name}</li>
                             <li>Current builds: {highlightCard.builds.length !== 0 ? highlightCard.builds.map((build, index) => {
-                                                    if (index === 0) {
-                                                        return build.name
-                                                    }
-                                                    else if (!highlightCard.builds.includes(build)) {
-                                                        return ", " + build.name
-                                                    }
-                                                }) : "none"}
+                                if (index === 0) {
+                                    return build.name
+                                }
+                                else if (!highlightCard.builds.slice(0, index).some(item => item.id === build.id)) {
+                                    return ", " + build.name
+                                }
+                            }) : "none"}
                             </li>
                             <button id="editCardButton" onClick={() => setEditCardOn(!editCardOn)}>Edit Card</button>
                         </ul>
@@ -106,6 +135,7 @@ const CardHighlight = ({cardList, setCardList}) => {
                                 </li>
                                 <button type='button' onClick={() => setEditCardOn(!editCardOn)}>Cancel Edit</button>
                                 <input type="submit" id='submitEditCardButton'></input>
+                                <button type='button' onClick={deleteCard}>Delete Card</button>
                             </form>
 
   return (

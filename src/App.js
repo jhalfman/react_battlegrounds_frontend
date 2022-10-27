@@ -35,12 +35,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cards" element={<Cards setTeamBuilder={setTeamBuilder} teamBuilder={teamBuilder} cardList={cardList}/>}>
-          <Route path="cardselection" element={<CreateBuild setBuildList={setBuildList} buildList={buildList} setTeamBuilder={setTeamBuilder}/>} />
+          <Route path="cardselection" element={<CreateBuild setBuildList={setBuildList} buildList={buildList} setTeamBuilder={setTeamBuilder}  cardList={cardList} setCardList={setCardList}/>} />
         </Route>
-        <Route path="/cards/:id" element={<CardHighlight cardList={cardList} setCardList={setCardList}/>} />
+        <Route path="/cards/:id" element={<CardHighlight cardList={cardList} setCardList={setCardList} setBuildList={setBuildList} buildList={buildList}/>} />
         <Route path="/cards/createcard" element={<CreateCard cardList={cardList} setCardList={setCardList}/>} />
         <Route path="/builds" element={<Builds setTeamBuilder={setTeamBuilder} buildList={buildList}/>} />
-        <Route path="/builds/:id" element={<BuildHighlight setBuildList={setBuildList} buildList={buildList} cardList={cardList}/>} />
+        <Route path="/builds/:id" element={<BuildHighlight setBuildList={setBuildList} buildList={buildList} cardList={cardList} setCardList={setCardList}/>} />
       </Routes>
     </div>
   );

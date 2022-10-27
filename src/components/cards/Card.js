@@ -5,7 +5,7 @@ const Card = ({card}) => {
   const navigate = useNavigate();
 
   return (
-    <img className="card" src={card.image_url} alt={card.name} onClick={() => navigate(`${card.id}`)}/>
+    <img className="card" src={card.image_url} alt={card.name} onClick={() => navigate(`/cards/${card.id}`)}/>
   )
 }
 

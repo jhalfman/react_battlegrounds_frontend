@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Card from './Card';
 import { useNavigate } from "react-router-dom";
 
-const BuildHighlight = ({setBuildList, buildList, cardList}) => {
+const BuildHighlight = ({setBuildList, buildList, cardList, setCardList}) => {
     const [currentBuild, setCurrentBuild] = useState({cards: []})
     const [highlight, setHighlight] = useState({});
     const [replacementForm, setReplacementForm] = useState({
@@ -32,6 +32,12 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
         .then(resp => resp.json())
         .then(builds => {
             setBuildList(builds)
+            const updatedCardList = cardList.map(card => {
+                const updatedBuildList = card.builds.filter(build => build.id !== parseInt(id))
+                
+                return {...card, builds: updatedBuildList}
+            })
+            setCardList(updatedCardList)
             navigate("/builds")
         })
     }
@@ -100,8 +106,8 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
     <form onSubmit={updateBuild} id='replacementForm'>
         <div id='replacementFormDiv'>
             <select onChange={setReplacement} value={replacementForm.replacementId} id='optionList'>
-                {cardList.map(card => {
-                    return <option key={card.id} value={card.id}>{card.name}  |  Tribe: {card.tribe.name}  |     Tier: {card.tier.tier}</option>
+                {cardList.map((card, index) => {
+                    return <option key={index} value={card.id}>{card.name}  |  Tribe: {card.tribe.name}  |     Tier: {card.tier.tier}</option>
                 })}
             </select>
             {confirmSelectionOn ? <button>Confirm Selection</button> : null}
@@ -117,8 +123,8 @@ const BuildHighlight = ({setBuildList, buildList, cardList}) => {
         <div id='highlightPanel'>
             {currentBuild.cards.map((card, index) => {
                 return (
-                    <div key={card.id} className="highlightCards">
-                        <Card key={card.id} card={card} />
+                    <div key={index} className="highlightCards">
+                        <Card key={index} card={card} />
                         {editorOn ? <button id='replaceButton' onClick={(e) => editBuild(card.id, index, e)}>Replace</button> : null}
                     </div>
                 )
