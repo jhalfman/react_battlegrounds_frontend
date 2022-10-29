@@ -70,8 +70,10 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
     }
 
     function filterCards(filter) {
+        console.log(filter)
         const filteredCards = cardList.filter(card => {
-            return (card.tier_id === filter.stars || filter.stars === 0) && (parseInt(card.tribe_id) === filter.tribe || filter.tribe === 0 && card.name.toLowerCase().includes(filter.search) || filter.search === "")
+            return (card.tier_id === filter.stars || filter.stars === 0) && (parseInt(card.tribe_id) === filter.tribe || filter.tribe === 0) && (card.name.toLowerCase().includes(filter.search) || filter.search === "")
+            
         })
         setFilteredCardList(filteredCards)
         navigate(`?stars=${filter.stars}&tribe=${filter.tribe}&search=${filter.search}`)
