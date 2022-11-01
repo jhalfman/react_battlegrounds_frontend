@@ -30,14 +30,15 @@ const BuildHighlight = ({setBuildList, buildList, cardList, setCardList}) => {
             method: "DELETE"
         })
         .then(resp => resp.json())
-        .then(builds => {
-            setBuildList(builds)
-            const updatedCardList = cardList.map(card => {
-                const updatedBuildList = card.builds.filter(build => build.id !== parseInt(id))
+        .then(update => {
+            setBuildList(update.builds)
+            setCardList(update.cards)
+            // const updatedCardList = cardList.map(card => {
+            //     const updatedBuildList = card.builds.filter(build => build.id !== parseInt(id))
                 
-                return {...card, builds: updatedBuildList}
-            })
-            setCardList(updatedCardList)
+            //     return {...card, builds: updatedBuildList}
+            // })
+            // setCardList(updatedCardList)
             navigate("/builds")
         })
     }
@@ -77,7 +78,7 @@ const BuildHighlight = ({setBuildList, buildList, cardList, setCardList}) => {
             })
         })
         .then(resp => resp.json())
-        .then(builds => {
+        .then(update => {
             // const patchedBuild = currentBuild.map((card, index) => {
             //     if (index === replacementForm.buildIndex) {
             //         return data
@@ -88,8 +89,9 @@ const BuildHighlight = ({setBuildList, buildList, cardList, setCardList}) => {
             // })
             // setCurrentBuild(patchedBuild)
             // console.log(buildList, currentBuild, patchedBuild)
-            setBuildList(builds)
-            const highlight = builds.find(build => build.id === parseInt(id))
+            setBuildList(update.builds)
+            setCardList(update.cards)
+            const highlight = update.builds.find(build => build.id === parseInt(id))
             setCurrentBuild(highlight)
             setReplacementForm({
                 cardId: null,

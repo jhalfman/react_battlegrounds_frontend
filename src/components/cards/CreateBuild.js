@@ -23,27 +23,29 @@ const CreateBuild = ({setBuildList, buildList, setTeamBuilder, cardList, setCard
             }),
         })
         .then(resp => resp.json())
-        .then(build => {
-          setBuildList([
-            ...buildList,
-            build
-          ])
-          const newCardBuildList = build.cards.map(card => card.id);
-          const updatedCardList = cardList.map(card => {
-            if (newCardBuildList.includes(card.id)) {
-              return {
-                ...card,
-                builds: [
-                  ...card.builds,
-                  {id: build.id, name: build.name}
-                ]
-              }
-            }
-            else {
-              return card
-            }
-          })
-          setCardList(updatedCardList)
+        .then(update => {
+          // setBuildList([
+          //   ...buildList,
+          //   build
+          // ])
+          // const newCardBuildList = build.cards.map(card => card.id);``
+          // const updatedCardList = cardList.map(card => {
+          //   if (newCardBuildList.includes(card.id)) {
+          //     return {
+          //       ...card,
+          //       builds: [
+          //         ...card.builds,
+          //         {id: build.id, name: build.name}
+          //       ]
+          //     }
+          //   }
+          //   else {
+          //     return card
+          //   }
+          // })
+          // setCardList(updatedCardList)
+          setBuildList(update.builds)
+          setCardList(update.cards)
           setTeamBuilder(false)
           navigate(`/builds`)
         }) 

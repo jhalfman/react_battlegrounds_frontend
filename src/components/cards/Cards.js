@@ -161,7 +161,7 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
                 <Card key={card.id} card={card} className='cards'/>
                 <h6>Tier: {card.tier.tier}</h6>
                 <h6>Tribe: {card.tribe.name}</h6>
-                <h6>Current number of builds: {card.builds.length}</h6>
+                <h6>Current number of builds: {[...new Set(card.builds.map(build => build.id))].length}</h6>
                 {teamBuilder ? <button onClick={() => addToTeam(card.id)}>Add to Build</button> : null}
             </div>
             )
