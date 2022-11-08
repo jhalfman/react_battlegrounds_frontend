@@ -19,11 +19,10 @@ const BuildHighlight = ({setBuildList, buildList, cardList, setCardList}) => {
 
     useEffect(() => {
         const highlight = buildList.find(build => build.id === parseInt(id))
-        console.log(highlight)
         if (highlight) {
             setCurrentBuild(highlight)
         }
-    }, [cardList])
+    }, [cardList, buildList, id])
 
     function deleteBuild() {
         fetch(`http://localhost:9292/builds/${id}`, {

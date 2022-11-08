@@ -5,13 +5,18 @@ const CreateCard = ({cardList, setCardList}) => {
   const [createCardForm, setCreateCardForm] = useState({
     name: "",
     tier: "",
-    tribe: "",
+    tribe: 1,
     url: ""
   })
   const navigate = useNavigate();
 
   function createCard(e) {
     e.preventDefault()
+    if (createCardForm.name === "" || createCardForm.tier === "" || createCardForm.url === "") {
+      alert("Please fill out entire form")
+      return null
+    }
+      
     fetch("http://localhost:9292/cards", {
             method: "POST",
             headers: {
