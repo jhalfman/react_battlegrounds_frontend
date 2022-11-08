@@ -23,7 +23,7 @@ const BuildHighlight = ({setBuildList, buildList, cardList, setCardList}) => {
         if (highlight) {
             setCurrentBuild(highlight)
         }
-    }, [])
+    }, [cardList])
 
     function deleteBuild() {
         fetch(`http://localhost:9292/builds/${id}`, {

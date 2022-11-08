@@ -11,14 +11,17 @@ const CardHighlight = ({cardList, setCardList, buildList, setBuildList}) => {
 
     useEffect(() => {
         const newHighlight = cardList.find(card => card.id === parseInt(id));
-        setHighlightCard(newHighlight)
-        setEditForm({
-            cardName: newHighlight.name,
-            tier: newHighlight.tier_id,
-            tribe: newHighlight.tribe.id,
-            url: newHighlight.image_url
-        })
-    }, [])
+        if  (newHighlight !== undefined) {
+            setHighlightCard(newHighlight)
+            setEditForm({
+                cardName: newHighlight.name,
+                tier: newHighlight.tier_id,
+                tribe: newHighlight.tribe.id,
+                url: newHighlight.image_url
+            })
+        }
+        
+    }, [cardList])
 
     function updateForm(e) {
         setEditForm({

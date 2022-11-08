@@ -4,7 +4,7 @@ import { useNavigate, Outlet } from "react-router-dom";
 
 const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
     
-    const [filteredCardList, setFilteredCardList] = useState(cardList)
+    const [filteredCardList, setFilteredCardList] = useState(undefined)
     const [filterList, setFilterList] = useState({
         stars: 0,
         tribe: 0,
@@ -50,6 +50,10 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
       })
     let navigate = useNavigate();
 
+    useEffect(() => {
+        setFilteredCardList(cardList)
+    }, [cardList])
+
     function setFilter(e) {
         if (e.target.name === "search") {
             const newFilterList = {
@@ -70,7 +74,6 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
     }
 
     function filterCards(filter) {
-        console.log(filter)
         const filteredCards = cardList.filter(card => {
             return (card.tier_id === filter.stars || filter.stars === 0) && (parseInt(card.tribe_id) === filter.tribe || filter.tribe === 0) && (card.name.toLowerCase().includes(filter.search) || filter.search === "")
             
@@ -126,6 +129,10 @@ const Cards = ({teamBuilder, setTeamBuilder, cardList}) => {
             ...newBuild,
             cards: newCardsArray
         })
+    }
+
+    if (filteredCardList === undefined) {
+        return <div>Loading Cards...</div>   
     }
     
   return (
